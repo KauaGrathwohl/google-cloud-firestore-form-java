@@ -1,5 +1,10 @@
+import { appConfig } from "./config.js";
+
 const form = document.querySelector("#contact-form");
 const statusParagraph = document.querySelector("#form-status");
+
+const backendBaseUrl = appConfig.backendBaseUrl?.trim() || "http://localhost:8080";
+const messagesEndpoint = new URL("/api/messages", backendBaseUrl).toString();
 
 function setStatus(message, type = "info") {
   statusParagraph.textContent = message;
@@ -19,7 +24,7 @@ form?.addEventListener("submit", async (event) => {
   setStatus("Enviando dados para o servidor...", "info");
 
   try {
-    const response = await fetch("/api/messages", {
+    const response = await fetch(messagesEndpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +34,7 @@ form?.addEventListener("submit", async (event) => {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({}));
-      throw new Error(error.error || "Falha inesperada");
+      throw new Error(error.error || `Falha inesperada (${response.status})`);
     }
 
     setStatus("Mensagem enviada com sucesso! ✅", "success");
@@ -37,7 +42,7 @@ form?.addEventListener("submit", async (event) => {
   } catch (error) {
     console.error("Erro ao enviar para o backend", error);
     setStatus(
-      "Não foi possível enviar. Verifique o console para detalhes.",
+      `Não foi possível enviar (${error.message}). Verifique o console para detalhes.`,
       "error",
     );
   }
