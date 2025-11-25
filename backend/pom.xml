@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>firestore-form</artifactId>
+    <artifactId>firestore-google-cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>firestore-form</name>
+    <name>firestore-google-cloud</name>
     <description>API simples para enviar mensagens ao Firestore</description>
     <packaging>jar</packaging>
 

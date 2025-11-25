@@ -64,6 +64,11 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(90, 107, 231, 0.2);
 }
 
+input[disabled],
+textarea[disabled] {
+  background-color: rgba(240, 240, 240, 0.9);
+}
+
 button {
   margin-top: 0.5rem;
   padding: 0.8rem;
@@ -86,6 +91,11 @@ button:active {
   transform: translateY(1px);
 }
 
+button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
 .muted {
   color: #606c95;
   font-size: 0.9rem;
@@ -104,4 +114,5 @@ button:active {
 .error {
   color: #c62828;
 }
+
 

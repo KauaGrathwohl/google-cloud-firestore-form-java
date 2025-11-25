@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Formulário Firestore</title>
     <link rel="stylesheet" href="./styles.css" />
+    <script>
+      // Ajuste esta variável para apontar para outro backend, se necessário.
+      window.BACKEND_BASE_URL = window.BACKEND_BASE_URL || "";
+    </script>
   </head>
   <body>
     <main class="container">
@@ -14,7 +18,7 @@
         <code>contactMessages</code> no Firestore.
       </p>
 
-      <form id="contact-form">
+      <form id="contact-form" novalidate>
         <label for="name">Nome</label>
         <input
           id="name"
@@ -47,10 +51,12 @@
         <button type="submit">Enviar</button>
       </form>
 
-      <p id="form-status" class="muted">Preencha os campos e clique em enviar.</p>
+      <p id="form-status" class="muted" role="status" aria-live="polite">
+        Preencha os campos e clique em enviar.
+      </p>
     </main>
 
-    <script type="module" src="./main.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
 

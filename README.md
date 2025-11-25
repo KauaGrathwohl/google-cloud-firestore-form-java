@@ -9,9 +9,9 @@ Estudo-Google-Cloud/
 ├── backend/                   # Aplicação Spring Boot
 │   ├── pom.xml
 │   └── src/main/...
-├── public/                    # Front-end estático
+├── frontend/                  # Front-end estático (sem npm)
 │   ├── index.html
-│   ├── main.js
+│   ├── app.js
 │   └── styles.css
 └── README.md
 ```
@@ -23,7 +23,7 @@ Estudo-Google-Cloud/
 - **FireStore** ativado no modo *Native*.
 - **Java 21** (JDK) instalado.
 - Maven instalado (ou utilize o `mvnw.cmd` incluído no projeto Spring Boot).
-- (Opcional) Python ≥ 3.8 para servir a pasta `public` localmente.
+- (Opcional) Python ≥ 3.8 para servir a pasta `frontend` localmente.
 
 ## Passo 1 — Habilitar o Firestore
 
@@ -87,18 +87,18 @@ setx GOOGLE_APPLICATION_CREDENTIALS "C:\chaves\firestore-form.json"
     }
     ```
 
-## Passo 4 — Servir o front-end estático
+## Passo 4 — Servir o front-end estático (separado do backend)
 
-O front-end envia requisições para `http://localhost:8080/api/messages`. Sirva a pasta `public` em outra porta (ex.: 3000 ou 8081):
+O front-end fica totalmente isolado na pasta `frontend`. Em um terminal separado:
 
 ```
-cd C:\Users\6127165\Documents\Estudo-Google-Cloud\public
+cd C:\Users\6127165\Documents\Estudo-Google-Cloud\frontend
 python -m http.server 8081
 ```
 
-Abra `http://localhost:8081` no navegador, preencha o formulário e envie. A resposta do backend aparecerá na tela.
+Abra `http://localhost:8081/index.html` no navegador. O formulário enviará solicitações para `http://localhost:8080/api/messages` (o backend precisa estar rodando nessa URL).
 
-> Se preferir copiar o `index.html` para dentro de um servidor Java (ex.: Spring MVC), ajuste as rotas conforme necessário.
+> Para apontar para outro backend, defina `window.BACKEND_BASE_URL` no `index.html` antes de carregar o `app.js`, ou ajuste diretamente o arquivo `app.js`.
 
 ## Passo 5 — Conferir os dados no Firestore
 
