@@ -1,4 +1,4 @@
-# Formulário com backend Java e Firestore
+# Formulário - Java e Firestore
 
 Este repositório demonstra um fluxo completo onde um front-end estático (HTML/CSS/JS) envia dados para uma API Java (Spring Boot), que por sua vez persiste as informações em uma coleção do **Cloud Firestore**. É uma base simples para validar integrações do Google Cloud sem depender de Node.js.
 
