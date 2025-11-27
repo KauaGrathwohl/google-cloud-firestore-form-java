@@ -86,6 +86,46 @@ setx GOOGLE_APPLICATION_CREDENTIALS "C:\chaves\firestore-form.json"
       "message": "Mensagem registrada com sucesso."
     }
     ```
+- `GET /api/messages`
+  - Retorna a lista de documentos armazenados na coleção `contactMessages`.
+  - Exemplo de resposta `200 OK`:
+    ```json
+    [
+      {
+        "id": "autoGeradoPeloFirestore",
+        "name": "Maria",
+        "email": "maria@example.com",
+        "message": "Olá Cloud!",
+        "createdAt": "2024-05-07T22:35:42.123Z"
+      }
+    ]
+    ```
+- `PUT /api/messages/{id}`
+  - Atualiza um documento existente na coleção.
+  - Exemplo de corpo:
+    ```json
+    {
+      "name": "Maria Atualizada",
+      "email": "maria@example.com",
+      "message": "Mensagem revisada"
+    }
+    ```
+  - Resposta `200 OK`:
+    ```json
+    {
+      "id": "autoGeradoPeloFirestore",
+      "message": "Mensagem atualizada com sucesso."
+    }
+    ```
+- `DELETE /api/messages/{id}`
+  - Remove definitivamente um documento da coleção.
+  - Resposta `200 OK`:
+    ```json
+    {
+      "id": "autoGeradoPeloFirestore",
+      "message": "Mensagem removida com sucesso."
+    }
+    ```
 
 ## Passo 4 — Servir o front-end estático (separado do backend)
 
@@ -99,6 +139,12 @@ python -m http.server 8081
 Abra `http://localhost:8081/index.html` no navegador. O formulário enviará solicitações para `http://localhost:8080/api/messages` (o backend precisa estar rodando nessa URL).
 
 > Para apontar para outro backend, defina `window.BACKEND_BASE_URL` no `index.html` antes de carregar o `app.js`, ou ajuste diretamente o arquivo `app.js`.
+
+### Experiência no front-end
+
+- Painel único com listagem, busca e botões de ação diretos; cadastros e edições acontecem em modais responsivos, mantendo o foco visual.
+- Inputs, botões e mensagens seguem padrão global (contraste, estados de foco e suporte a teclado) e utilizam feedbacks em tempo real.
+- A lista mostra contagem de registros exibidos, respeita filtros textuais e permite editar/excluir cada item sem recarregar a página.
 
 ## Passo 5 — Conferir os dados no Firestore
 

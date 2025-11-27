@@ -49,12 +49,139 @@
         }
       ],
       "response": []
+    },
+    {
+      "name": "Listar mensagens",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/messages",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "messages"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code é 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Resposta é uma lista\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    if (jsonData.length > 0) {",
+              "        const item = jsonData[0];",
+              "        pm.expect(item).to.have.property('id');",
+              "        pm.expect(item).to.have.property('name');",
+              "        pm.expect(item).to.have.property('email');",
+              "        pm.expect(item).to.have.property('message');",
+              "    }",
+              "});"
+            ]
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "Atualizar mensagem",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Maria Atualizada\",\n    \"email\": \"maria@example.com\",\n    \"message\": \"Alteração na mensagem\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/messages/{{messageId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "messages",
+            "{{messageId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code é 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Resposta confirma atualização\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.eql(\"Mensagem atualizada com sucesso.\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "response": []
+    },
+    {
+      "name": "Excluir mensagem",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/messages/{{messageId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "messages",
+            "{{messageId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code é 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Resposta confirma remoção\", function () {",
+              "    const jsonData = pm.response.json();",
+              "    pm.expect(jsonData.message).to.eql(\"Mensagem removida com sucesso.\");",
+              "});"
+            ]
+          }
+        }
+      ],
+      "response": []
     }
   ],
   "variable": [
     {
       "key": "baseUrl",
       "value": "http://localhost:8080"
+    },
+    {
+      "key": "messageId",
+      "value": "SUBSTITUA_PELO_ID"
     }
   ]
 }

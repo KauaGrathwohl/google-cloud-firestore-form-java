@@ -11,50 +11,131 @@
     </script>
   </head>
   <body>
-    <main class="container">
-      <h1>Envio de Mensagens para o Firestore</h1>
-      <p>
-        Preencha o formulário abaixo para enviar um documento para a coleção
-        <code>contactMessages</code> no Firestore.
-      </p>
+    <main class="page">
+      <header class="page-header">
+        <div>
+          <h1>Central de Mensagens</h1>
+          <p>
+            Cadastre, atualize ou revise registros do Firestore com uma experiência consistente pela plataforma.
+          </p>
+        </div>
+        <button type="button" id="open-create-modal" class="btn btn-primary">
+          Nova mensagem
+        </button>
+      </header>
 
-      <form id="contact-form" novalidate>
-        <label for="name">Nome</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Seu nome"
-          autocomplete="name"
-          required
-        />
+      <section class="card list-card" aria-live="polite">
+        <form id="messages-filters" class="filters-form" novalidate>
+          <div class="form-field form-field--full">
+            <label for="filter-text">Buscar registros</label>
+            <input
+              id="filter-text"
+              name="query"
+              type="search"
+              placeholder="Pesquise por nome, e-mail ou trecho da mensagem"
+            />
+          </div>
+          <div class="filters-actions">
+            <button type="submit" class="btn btn-secondary btn--compact">
+              Aplicar filtro
+            </button>
+            <button type="reset" class="btn btn-ghost btn--compact">Limpar</button>
+          </div>
+        </form>
 
-        <label for="email">E-mail</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="nome@exemplo.com"
-          autocomplete="email"
-          required
-        />
+        <div class="list-toolbar">
+          <p id="list-status" class="muted" aria-live="polite">
+            Carregando mensagens...
+          </p>
+          <button
+            type="button"
+            id="refresh-messages"
+            class="btn btn-ghost"
+            aria-label="Recarregar lista de mensagens"
+          >
+            Recarregar
+          </button>
+        </div>
 
-        <label for="message">Mensagem</label>
-        <textarea
-          id="message"
-          name="message"
-          rows="5"
-          placeholder="Escreva sua mensagem..."
-          required
-        ></textarea>
-
-        <button type="submit">Enviar</button>
-      </form>
-
-      <p id="form-status" class="muted" role="status" aria-live="polite">
-        Preencha os campos e clique em enviar.
-      </p>
+        <p id="messages-empty" class="muted">Nenhum registro encontrado ainda.</p>
+        <ul id="messages-list" class="messages-list" hidden></ul>
+      </section>
     </main>
+
+    <div
+      class="modal"
+      id="message-modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="message-modal-title"
+    >
+      <div class="modal__dialog">
+        <header class="modal__header">
+          <h2 id="message-modal-title" data-modal-title>Nova mensagem</h2>
+          <button
+            type="button"
+            class="modal__close"
+            data-close-modal
+            aria-label="Fechar modal"
+          >
+            ✕
+          </button>
+        </header>
+
+        <form id="message-form" class="modal__form" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="name">Nome completo</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="Ex.: Maria Silva"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="form-field">
+              <label for="email">E-mail</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="nome@empresa.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="form-field form-field--full">
+              <label for="message">Mensagem</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                placeholder="Contextualize a mensagem para o time."
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <p id="form-status" class="muted" role="status" aria-live="polite">
+            Preencha os campos e clique em salvar.
+          </p>
+
+          <div class="modal__actions">
+            <button type="submit" class="btn btn-primary">
+              Salvar mensagem
+            </button>
+            <button type="button" class="btn btn-secondary" data-close-modal>
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <script src="./app.js"></script>
   </body>
